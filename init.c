@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 12:52:18 by agirona           #+#    #+#             */
-/*   Updated: 2021/03/17 18:02:51 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/12 16:08:55 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ void	init_player(t_mlx *data)
 		x = 0;
 		while (data->map[y][x] != '\0')
 		{
-			if (ft_ischar("NEWS", data->map[y][x]) == 1)
-			{
-				data->px = x;
-				data->py = y;
-				data->map[y][x] = '0';
-			}
 			if (data->map[y][x] == 'E')
 				data->pa = 0;
 			if (data->map[y][x] == 'N')
@@ -52,6 +46,12 @@ void	init_player(t_mlx *data)
 				data->pa = 180;
 			if (data->map[y][x] == 'S')
 				data->pa = 270;
+			if (ft_ischar("NEWS", data->map[y][x]) == 1)
+			{
+				data->px = x;
+				data->py = y;
+				data->map[y][x] = '0';
+			}
 			x++;
 		}
 		y++;

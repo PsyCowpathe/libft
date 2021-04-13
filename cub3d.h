@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 15:29:34 by agirona           #+#    #+#             */
-/*   Updated: 2021/03/17 18:02:52 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/13 18:59:37 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,16 @@ void	init_player(t_mlx *data);
 
 int	read_map(char *str, t_mlx *data);
 
+int		*rotate(int *centerxy, int *pointxy, float angle);
+
+
+void	set_pixel(t_mlx *data, int x, int y, int color);
 void	clear_win(t_mlx *data);
 void	print_column(t_mlx *data, int x, int height);
 
 void	calc_distance(t_mlx *data);
+
+
+void	draw_utility(int *tab, t_mlx *data);
 
 #endif
