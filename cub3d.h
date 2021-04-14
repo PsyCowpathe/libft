@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 15:29:34 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/13 18:59:37 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/14 19:23:09 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 # define DIRT 0XB68831
 # define SKY 0X87CEFA
 # define ROT 3
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_W 13
+# define KEY_LEFT_TURN 123
+# define KEY_RIGHT_TURN 124
 
 typedef struct	s_mlx
 {
@@ -59,6 +65,13 @@ typedef struct	s_mlx
 	float	nexthory;
 	float	nextvertx;
 	float	nextverty;
+
+	int		forward;
+	int		right;
+	int		left;
+	int		backward;
+	int		turnright;
+	int		turnleft;
 }				t_mlx;
 
 
@@ -67,7 +80,7 @@ void	init_player(t_mlx *data);
 
 int	read_map(char *str, t_mlx *data);
 
-int		*rotate(int *centerxy, int *pointxy, float angle);
+float	*rotate(float *centerxy, float *pointxy, float angle);
 
 
 void	set_pixel(t_mlx *data, int x, int y, int color);

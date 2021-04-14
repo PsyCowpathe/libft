@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 15:10:23 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/13 18:59:38 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/14 19:23:10 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ void	bresenham(int *tab, int *size, t_mlx *data)
 
 void	draw_utility(int *tab, t_mlx *data)
 {
-	int		size[5];
+	int		*size;
 
+	size = malloc(sizeof(int) * 5);
 	size[0] = tab[2] - tab[0];
 	size[1] = tab[3] - tab[1];
 	size[2] = (size[0] > 0) ? 1 : -1;
@@ -67,4 +68,5 @@ void	draw_utility(int *tab, t_mlx *data)
 	size[0] = abs(size[0]);
 	size[1] = abs(size[1]);
 	bresenham(tab, size, data);
+	free(size);
 }

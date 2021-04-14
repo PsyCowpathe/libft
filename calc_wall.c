@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 12:55:10 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/13 18:59:39 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/14 19:23:12 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ float	get_closest_vertical_wall(t_mlx *data, float rayon)
 			nexty = nexty - add;
 		}
 	}
-	dprintf(1, "VWall x = %f y = %f", nextx, nexty);
+	//dprintf(1, "VWall x = %f y = %f", nextx, nexty);
 	dist = sqrt(pow(nextx - data->px, 2) + pow(nexty - data->py, 2));
 	return (dist);
 }
@@ -111,7 +111,7 @@ float	get_closest_horizontal_wall(t_mlx *data, float rayon)
 			nextx = nextx - add;
 		}
 	}
-	dprintf(1, " HWall x = %f y = %f", nextx, nexty);
+	//dprintf(1, " HWall x = %f y = %f", nextx, nexty);
 	dist = sqrt(pow(nextx - data->px, 2) + pow(nexty - data->py, 2));
 	return (dist);
 }
@@ -123,15 +123,15 @@ float	get_closest_wall(t_mlx *data, float rayon)
 
 	vdist = get_closest_vertical_wall(data, rayon);
 	hdist = get_closest_horizontal_wall(data, rayon);
-	dprintf(1, " Hdist = %f Vdist = %f", hdist, vdist);
+	//dprintf(1, " Hdist = %f Vdist = %f", hdist, vdist);
 	if (vdist < hdist)
 	{
-		ft_putstr("Vertical");
+		//ft_putstr("Vertical");
 		return (vdist);
 	}
 	else
 	{
-		ft_putstr("Horizontal");
+		//ft_putstr("Horizontal");
 		return (hdist);
 	}
 }
@@ -154,7 +154,7 @@ void	calc_distance(t_mlx *data)
 			rayon = 360 + rayon;
 		else if (rayon > 360)
 			rayon = 0 + (rayon - 360);
-		dprintf(1, "\nangle = %f ", rayon);
+		//dprintf(1, "\nangle = %f ", rayon);
 		tmp = ft_itoa(rayon);
 		free(tmp);
 		get_first_hor(data, rayon);

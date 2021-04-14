@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 15:22:57 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/13 18:59:36 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/14 19:23:08 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_map(char **map, int max)
 		y++;
 	}
 }
-
 
 void	square(t_mlx *data, int x, int y, int size, int color)
 {
@@ -60,22 +59,20 @@ void	square(t_mlx *data, int x, int y, int size, int color)
 	}
 }
 
-int		*rotate(int *centerxy, int *pointxy, float angle)
+float	*rotate(float *centerxy, float *pointxy, float angle)
 {
-	int		*newxy;
-	int		tmpx;
-	int		tmpy;
+	float	*newxy;
+	float	tmpx;
+	float	tmpy;
 	
-	newxy = malloc(sizeof(int) * 2);
+	newxy = malloc(sizeof(float) * 2);
 	angle = angle * -1;
 	newxy[0] = pointxy[0] - centerxy[0];
-	newxy[1] = pointxy[1] - centerxy[0];
+	newxy[1] = pointxy[1] - centerxy[1];
 	tmpx = newxy[0] * cos(angle) - newxy[1] * sin(angle);
 	tmpy = newxy[0] * sin(angle) + newxy[1] * cos(angle);
-	newxy[0] = tmpx + centerxy[0] * 20 + 10;
-	newxy[1] = tmpy + centerxy[1] * 20 + 10;
-	//tab[0] = centerxy[0] * 20 + 10;
-	//tab[1] = centerxy[1] * 20 + 10;
+	newxy[0] = tmpx + centerxy[0];
+	newxy[1] = tmpy + centerxy[1];
 	return (newxy);
 }
 
@@ -83,9 +80,9 @@ void	mini_map(t_mlx *data, int size)
 {
 	int		x;
 	int		y;
-	int		centerxy[2];
-	int		pointxy[2];
-	int		*tmp;
+	float	centerxy[2];
+	float	pointxy[2];
+	float	*tmp;
 	int		*tab;
 
 	y = 0;
@@ -102,34 +99,38 @@ void	mini_map(t_mlx *data, int size)
 		y++;
 	}
 	square(data, (int)data->px * size, (int)data->py * size, size, RED);
-	centerxy[0] = data->px;
-	centerxy[1] = data->py;
-	pointxy[0] = data->px + 50;
-	pointxy[1] = data->py;
-	tmp = rotate(centerxy, pointxy, (data->pa - 30) * M_PI / 180);
-	tab[0] = centerxy[0] * 20 + 10;
-	tab[1] = centerxy[1] * 20 + 10;
-	tab[2] = tmp[0];
-	tab[3] = tmp[1];
+	centerxy[0] = data->px * 20;
+	centerxy[1] = data->py * 20;
+	pointxy[0] = (data->px * 20) + 30;
+	pointxy[1] = data->py * 20;
+	tmp = rotate(centerxy, pointxy, (data->pa - 30) * (M_PI / 180));
+	tab[0] = centerxy[0];
+	tab[1] = centerxy[1];
+	tab[2] = (int)tmp[0];
+	tab[3] = (int)tmp[1];
 	draw_utility(tab, data);
 	free(tmp);
 	tmp = rotate(centerxy, pointxy, (data->pa + 30) * M_PI / 180);
-	tab[0] = centerxy[0] * 20 + 10;
-	tab[1] = centerxy[1] * 20 + 10;
-	tab[2] = tmp[0];
-	tab[3] = tmp[1];
+	tab[0] = centerxy[0];
+	tab[1] = centerxy[1];
+	tab[2] = (int)tmp[0];
+	tab[3] = (int)tmp[1];
 	free(tmp);
 	draw_utility(tab, data);
 	free(tab);
 }
 
-int		keyboard(int key, t_mlx *data)
+/*int		keyboard(t_mlx *data)
 {
-	int		*tmp;
-	int		centerxy[2];
-	int		pointxy[2];
+	float	*tmp;
+	float	centerxy[2];
+	float	pointxy[2];
 
 	clear_win(data);
+	centerxy[0] = data->px;
+	centerxy[1] = data->py;
+	pointxy[0] = data->px + 0.1;
+	pointxy[1] = data->py;
 	if (key == 124 || key == 123)
 	{
 		if (key == 124)
@@ -146,13 +147,27 @@ int		keyboard(int key, t_mlx *data)
 		}
 		//dprintf(1, "angle = %f", data->pa);
 	}
-	else if (key == 13)
+	else if (key == KEY_W)
 	{
-		centerxy[0] = data->px;
-		centerxy[1] = data->py;
-		pointxy[0] = data->px + 1;
-		pointxy[1] = data->py;
 		tmp = rotate(centerxy, pointxy, data->pa * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	else if (key == KEY_A)
+	{
+		tmp = rotate(centerxy, pointxy, (data->pa + 90) * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	else if (key == KEY_D)
+	{
+		tmp = rotate(centerxy, pointxy, (data->pa - 90) * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	else if (key == KEY_S)
+	{
+		tmp = rotate(centerxy, pointxy, (data->pa - 180) * (M_PI / 180));
 		data->px = tmp[0]; 
 		data->py = tmp[1]; 
 	}
@@ -160,9 +175,109 @@ int		keyboard(int key, t_mlx *data)
 	calc_distance(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (1);
+}*/
+
+int		event(t_mlx *data)
+{
+	float	*tmp;
+	float	centerxy[2];
+	float	pointxy[2];
+
+	clear_win(data);
+	if (data->forward == 1)
+	{
+		centerxy[0] = data->px;
+		centerxy[1] = data->py;
+		pointxy[0] = data->px + 0.1;
+		pointxy[1] = data->py;
+		tmp = rotate(centerxy, pointxy, data->pa * (M_PI / 180));
+		data->px = tmp[0];
+		data->py = tmp[1]; 
+	}
+	if (data->right == 1)
+	{
+		centerxy[0] = data->px;
+		centerxy[1] = data->py;
+		pointxy[0] = data->px + 0.1;
+		pointxy[1] = data->py;
+		tmp = rotate(centerxy, pointxy, (data->pa - 90) * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	if (data->left == 1)
+	{
+		centerxy[0] = data->px;
+		centerxy[1] = data->py;
+		pointxy[0] = data->px + 0.1;
+		pointxy[1] = data->py;
+		tmp = rotate(centerxy, pointxy, (data->pa + 90) * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	if (data->backward == 1)
+	{
+		centerxy[0] = data->px;
+		centerxy[1] = data->py;
+		pointxy[0] = data->px + 0.1;
+		pointxy[1] = data->py;
+		tmp = rotate(centerxy, pointxy, (data->pa - 180) * (M_PI / 180));
+		data->px = tmp[0]; 
+		data->py = tmp[1]; 
+	}
+	if (data->turnright == 1)
+	{
+		data->pa -= ROT;
+		if (data->pa < 0)
+			data->pa = 360 + data->pa;
+	}
+	if (data->turnleft == 1)
+	{
+		data->pa += ROT;
+		if (data->pa > 360)
+			data->pa = 0 + (data->pa - 360);
+	}
+	mini_map(data, 20);
+	calc_distance(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	return (1);
 }
 
-int	main(int argc, char **argv)
+int		keypress(int key, t_mlx *data)
+{
+	if (key == KEY_W)
+		data->forward = 1;
+	if (key == KEY_D)
+		data->right = 1;
+	if (key == KEY_A)
+		data->left = 1;
+	if (key == KEY_S)
+		data->backward = 1;
+	if (key == KEY_LEFT_TURN)
+		data->turnleft = 1;
+	if (key == KEY_RIGHT_TURN)
+		data->turnright = 1;
+	event(data);
+	return (1);
+}
+
+int		keyrelease(int key, t_mlx *data)
+{	
+	if (key == KEY_W)
+		data->forward = 0;
+	if (key == KEY_D)
+		data->right = 0;
+	if (key == KEY_A)
+		data->left = 0;
+	if (key == KEY_S)
+		data->backward = 0;
+	if (key == KEY_LEFT_TURN)
+		data->turnleft = 0;
+	if (key == KEY_RIGHT_TURN)
+		data->turnright = 0;
+	return (1);
+}
+
+int		main(int argc, char **argv)
 {
 	t_mlx	data;
 
@@ -177,7 +292,8 @@ int	main(int argc, char **argv)
 		data.py = 2.5;
 		calc_distance(&data);
 		mini_map(&data, 20);
-		mlx_key_hook(data.win, keyboard, &data);
+		mlx_hook(data.win, 2, 1L<<0, keypress, &data);
+		mlx_hook(data.win, 3, 1L<<1, keyrelease, &data);
 		mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 		mlx_loop(data.mlx);
 	}
