@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 15:29:34 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/14 19:23:09 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/17 18:42:58 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct	s_mlx
 	void	*mlx;
 	void	*win;
 	void	*img;
-	char	*addr;
+	int		*addr;
 	int		bits;
 	int		linelen;
 	int		endian;
@@ -72,6 +72,9 @@ typedef struct	s_mlx
 	int		backward;
 	int		turnright;
 	int		turnleft;
+
+	void	*texture;
+	int		*text_data;
 }				t_mlx;
 
 
@@ -85,7 +88,7 @@ float	*rotate(float *centerxy, float *pointxy, float angle);
 
 void	set_pixel(t_mlx *data, int x, int y, int color);
 void	clear_win(t_mlx *data);
-void	print_column(t_mlx *data, int x, int height);
+void	print_column(t_mlx *data, int x, int height, int wich);
 
 void	calc_distance(t_mlx *data);
 

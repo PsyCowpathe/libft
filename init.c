@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 12:52:18 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/12 16:08:55 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/17 15:45:25 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,22 @@
 
 void	init_mlx(t_mlx *data, char *str)
 {
+	int		bpp;
+	int		endian;
+	int		size_line;
+	int		img_width;
+	int		img_height;
+	
 	data->mapy = 0;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIN_X, WIN_Y, str);
 	data->img = mlx_new_image(data->mlx, WIN_X, WIN_Y);
-	data->addr = mlx_get_data_addr(data->img, &data->bits,
+	data->addr = (int *)mlx_get_data_addr(data->img, &data->bits,
 			&data->linelen, &data->endian);
+
+	data->texture = mlx_xpm_file_to_image(data->mlx, "/Users/agirona/stud/Cub3D/textures/test.xpm", &img_width, &img_height);
+	data->text_data = (int *)mlx_get_data_addr(data->texture, &bpp, &size_line, &endian);
+
 }
 
 void	init_player(t_mlx *data)

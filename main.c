@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/12 15:22:57 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/14 19:23:08 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/17 18:42:59 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,62 +120,32 @@ void	mini_map(t_mlx *data, int size)
 	free(tab);
 }
 
-/*int		keyboard(t_mlx *data)
+void	texture(t_mlx *data)
 {
-	float	*tmp;
-	float	centerxy[2];
-	float	pointxy[2];
+	int		img_width;
+	int		img_height;
+	int		y;
+	int		x;
+	int		bpp;
+	int		endian;
+	int		size_line;
 
-	clear_win(data);
-	centerxy[0] = data->px;
-	centerxy[1] = data->py;
-	pointxy[0] = data->px + 0.1;
-	pointxy[1] = data->py;
-	if (key == 124 || key == 123)
+	y = 0;
+	x = 0;
+    data->texture = mlx_xpm_file_to_image(data->mlx, "/Users/agirona/stud/Cub3D/textures/test.xpm", &img_width, &img_height);
+	data->text_data = (int *)mlx_get_data_addr(data->texture, &bpp, &size_line, &endian);
+	while (y < 64)
 	{
-		if (key == 124)
+		while (x < 64)
 		{
-			data->pa -= ROT;
-			if (data->pa < 0)
-				data->pa = 360 + data->pa;
+			data->addr[y * WIN_X + x] = data->text_data[y * 64 + x];
+			x++;
 		}
-		else
-		{
-			data->pa += ROT;
-			if (data->pa > 360)
-				data->pa = 0 + (data->pa - 360);
-		}
-		//dprintf(1, "angle = %f", data->pa);
+		x = 0;
+		y++;
 	}
-	else if (key == KEY_W)
-	{
-		tmp = rotate(centerxy, pointxy, data->pa * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
-	}
-	else if (key == KEY_A)
-	{
-		tmp = rotate(centerxy, pointxy, (data->pa + 90) * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
-	}
-	else if (key == KEY_D)
-	{
-		tmp = rotate(centerxy, pointxy, (data->pa - 90) * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
-	}
-	else if (key == KEY_S)
-	{
-		tmp = rotate(centerxy, pointxy, (data->pa - 180) * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
-	}
-	mini_map(data, 20);
-	calc_distance(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	return (1);
-}*/
+}
 
 int		event(t_mlx *data)
 {
@@ -191,8 +161,11 @@ int		event(t_mlx *data)
 		pointxy[0] = data->px + 0.1;
 		pointxy[1] = data->py;
 		tmp = rotate(centerxy, pointxy, data->pa * (M_PI / 180));
-		data->px = tmp[0];
-		data->py = tmp[1]; 
+		if (data->map[(int)tmp[1]][(int)tmp[0]] == '0')
+		{
+			data->px = tmp[0];
+			data->py = tmp[1]; 
+		}
 	}
 	if (data->right == 1)
 	{
@@ -201,8 +174,11 @@ int		event(t_mlx *data)
 		pointxy[0] = data->px + 0.1;
 		pointxy[1] = data->py;
 		tmp = rotate(centerxy, pointxy, (data->pa - 90) * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
+		if (data->map[(int)tmp[1]][(int)tmp[0]] == '0')
+		{
+			data->px = tmp[0];
+			data->py = tmp[1]; 
+		}
 	}
 	if (data->left == 1)
 	{
@@ -211,6 +187,11 @@ int		event(t_mlx *data)
 		pointxy[0] = data->px + 0.1;
 		pointxy[1] = data->py;
 		tmp = rotate(centerxy, pointxy, (data->pa + 90) * (M_PI / 180));
+		if (data->map[(int)tmp[1]][(int)tmp[0]] == '0') //add limit protection
+		{
+			data->px = tmp[0];
+			data->py = tmp[1]; 
+		}
 		data->px = tmp[0]; 
 		data->py = tmp[1]; 
 	}
@@ -221,8 +202,11 @@ int		event(t_mlx *data)
 		pointxy[0] = data->px + 0.1;
 		pointxy[1] = data->py;
 		tmp = rotate(centerxy, pointxy, (data->pa - 180) * (M_PI / 180));
-		data->px = tmp[0]; 
-		data->py = tmp[1]; 
+		if (data->map[(int)tmp[1]][(int)tmp[0]] == '0')
+		{
+			data->px = tmp[0];
+			data->py = tmp[1]; 
+		}
 	}
 	if (data->turnright == 1)
 	{
@@ -238,7 +222,8 @@ int		event(t_mlx *data)
 	}
 	mini_map(data, 20);
 	calc_distance(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	texture(data);
+	///mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (1);
 }
 

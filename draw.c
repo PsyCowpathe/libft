@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 12:53:37 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/12 16:08:54 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/17 18:42:57 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,30 @@
 
 void	set_pixel(t_mlx *data, int x, int y, int color)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->linelen + x * (data->bits / 8));
-	*(unsigned int *)dst = color;
+	data->addr[y * WIN_X + x] = color;
 }
 
-void	print_column(t_mlx *data, int x, int height)
+void	print_column(t_mlx *data, int x, int height, int wich)
 {
-	int		i;
+	float	i;
+	float	between;
+	float	y;
+	int		tmpx;
+	int		tmpy;
+	(void)wich;
 
 	i = 0;
-	if (height > (WIN_Y / 2))
-		height = WIN_Y / 2;
-	while (i < height)
+	between = (float)64 / (height * 2);
+	dprintf(1, "%f", between);
+	tmpx = x % 64;
+	tmpy = (WIN_Y / 2) + (height / 2);
+	y = 0;
+	while (i < (height * 2))
 	{
-		set_pixel(data, x, (WIN_Y / 2) - i, WHITE);
+		data->addr[(tmpy - (int)i) * WIN_X + x] = data->text_data[(int)y * 64 + tmpx];
 		i++;
+		//i += between;
+		y += between;
 	}
 }
 

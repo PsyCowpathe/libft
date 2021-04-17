@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 12:55:10 by agirona           #+#    #+#             */
-/*   Updated: 2021/04/14 19:23:12 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/04/17 18:42:58 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ float	get_closest_vertical_wall(t_mlx *data, float rayon)
 			nexty = nexty - add;
 		}
 	}
-	//dprintf(1, "VWall x = %f y = %f", nextx, nexty);
 	dist = sqrt(pow(nextx - data->px, 2) + pow(nexty - data->py, 2));
 	return (dist);
 }
@@ -111,38 +110,34 @@ float	get_closest_horizontal_wall(t_mlx *data, float rayon)
 			nextx = nextx - add;
 		}
 	}
-	//dprintf(1, " HWall x = %f y = %f", nextx, nexty);
 	dist = sqrt(pow(nextx - data->px, 2) + pow(nexty - data->py, 2));
 	return (dist);
 }
 
-float	get_closest_wall(t_mlx *data, float rayon)
+void	get_closest_wall(t_mlx *data, float rayon, int x, float patch)
 {
 	float	vdist;
 	float	hdist;
+	float	distance;
+	float	wallheight;
 
 	vdist = get_closest_vertical_wall(data, rayon);
 	hdist = get_closest_horizontal_wall(data, rayon);
-	//dprintf(1, " Hdist = %f Vdist = %f", hdist, vdist);
 	if (vdist < hdist)
-	{
-		//ft_putstr("Vertical");
-		return (vdist);
-	}
+		distance = vdist * cos(patch * (M_PI / 180));
 	else
-	{
-		//ft_putstr("Horizontal");
-		return (hdist);
-	}
+		distance = hdist * cos(patch * (M_PI / 180));
+	wallheight = data->cubesize / distance * data->proj;
+	if (vdist < hdist)
+		print_column(data, x, wallheight / 10, 0);
+	else
+		print_column(data, x, wallheight / 10, 1);
 }
 
 void	calc_distance(t_mlx *data)
 {
 	float	rayon;
-	float	distance;
-	float	wallheight;
 	int		x;
-	char	*tmp;
 	float	patch;
 
 	patch = -30;
@@ -154,17 +149,10 @@ void	calc_distance(t_mlx *data)
 			rayon = 360 + rayon;
 		else if (rayon > 360)
 			rayon = 0 + (rayon - 360);
-		//dprintf(1, "\nangle = %f ", rayon);
-		tmp = ft_itoa(rayon);
-		free(tmp);
 		get_first_hor(data, rayon);
 		get_first_vert(data, rayon);
-		distance = get_closest_wall(data, rayon);
-		distance = distance * cos(patch * (M_PI / 180));
-		wallheight = data->cubesize / distance * data->proj;
-		print_column(data, x, wallheight / 10);
+		get_closest_wall(data, rayon, x, patch);
 		rayon = rayon + data->between;
-		//dprintf(1, " %f height = %f", patch, wallheight);
 		patch += data->between;
 		x--;
 	}
