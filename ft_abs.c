@@ -6,13 +6,13 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 06:39:11 by agirona           #+#    #+#             */
-/*   Updated: 2021/02/04 06:39:45 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/03/12 17:36:18 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_abs(int  nb)
+int	ft_abs(int nb)
 {
 	if (nb < 0)
 		return (nb * -1);

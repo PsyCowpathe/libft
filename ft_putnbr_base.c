@@ -50,12 +50,10 @@ static void		ft_r_putnbr_base(long int nb, int div, char *base)
 
 void			ft_putnbr_base(int nbr, char *base)
 {
-	int			i;
 	int			div;
 	long int	nb;
 
 	nb = nbr;
-	i = 0;
 	div = 0;
 	if (ft_check(base) == 0)
 		return ;
