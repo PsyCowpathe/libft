@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:43:53 by agirona           #+#    #+#             */
-/*   Updated: 2021/06/08 21:00:09 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/06/17 15:30:57 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int	newline(char **str, char **save)
 		{
 			str[0][i] = '\0';
 			i++;
-			if ((*save = ft_strdup_leaks(str[0] + i, 0)) == NULL)
+			*save = ft_strdup_leaks(str[0] + i, 0);
+			if (*save == NULL)
 				return (-1);
-			if ((str[0] = ft_strdup_leaks(str[0], 1)) == NULL)
+			str[0] = ft_strdup_leaks(str[0], 1);
+			if (str[0] == NULL)
 				return (-1);
 			return (1);
 		}
@@ -57,19 +59,21 @@ int	get_next_line(int fd, char **line)
 
 	ret = -1;
 	*line = NULL;
-	if (fd < 0 || (buff = malloc(sizeof(char) * BUFFER_SIZE + 1)) == NULL)
+	if (fd < 0 || new_malloc((void *)&buff, sizeof(char), BUFFER_SIZE + 1) == 0)
 		return (freevar(&save[fd], NULL, -1));
-	if (save[fd] && (line[0] = ft_strdup_leaks(save[fd], 0)) == NULL)
+	line[0] = ft_strdup_leaks(save[fd], 0);
+	if (save[fd] && line[0] == NULL)
 		return (freevar(&buff, &save[fd], -1));
 	else if (save[fd])
 		freevar(&save[fd], NULL, 0);
-	while (ret != 0 && (ret = newline(line, &save[fd])) == 0)
+	while (ret != 0 && newline(line, &save[fd]) == 0)
 	{
 		ret = read(fd, buff, BUFFER_SIZE);
 		if (ret < 0)
 			return (freevar(&buff, &save[fd], -1));
 		buff[ret] = '\0';
-		if ((line[0] = gnl_strjoin(line[0], buff)) == NULL)
+		line[0] = gnl_strjoin(line[0], buff);
+		if (line[0] == NULL)
 			return (-1);
 	}
 	if (save[fd] && ret != -1)
