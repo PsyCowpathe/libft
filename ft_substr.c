@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 15:42:35 by agirona           #+#    #+#             */
-/*   Updated: 2021/06/17 15:24:26 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 16:30:25 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char		*res;
 
 	i = 0;
+	res = NULL;
 	if (!s)
 		return (NULL);
 	if (start == 0 && len > ft_strlen(s))
