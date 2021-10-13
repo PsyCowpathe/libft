@@ -6,13 +6,14 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:45:28 by agirona           #+#    #+#             */
-/*   Updated: 2021/06/21 16:27:48 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 16:41:12 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include "libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>

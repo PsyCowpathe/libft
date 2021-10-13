@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/10 12:15:37 by agirona           #+#    #+#             */
-/*   Updated: 2021/06/21 16:27:13 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/06/22 17:00:55 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,4 @@ char	*dup_norm(char **line, const char *s1, int leaks)
 	}
 	line[0] = str;
 	return (str);
-}
-
-int	new_read(int *ret, int fd, char *buff, int buffer_size)
-{
-	*ret = read(fd, buff, buffer_size);
-	return (*ret);
 }

@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   new_ternaire.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/04 06:39:11 by agirona           #+#    #+#             */
-/*   Updated: 2021/09/08 22:04:16 by agirona          ###   ########lyon.fr   */
+/*   Created: 2021/08/28 17:29:14 by agirona           #+#    #+#             */
+/*   Updated: 2021/08/28 17:30:39 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_abs(int nb)
+int	new_ternaire(int condition, int res1, int res2)
 {
-	if (nb < 0)
-		return (nb * -1);
-	else
-		return (nb);
+	if (condition == 0)
+		return (res1);
+	return (res2);
 }

@@ -1,50 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 14:15:49 by agirona           #+#    #+#             */
-/*   Updated: 2021/10/13 14:52:21 by agirona          ###   ########lyon.fr   */
+/*   Created: 2021/09/23 16:33:25 by agirona           #+#    #+#             */
+/*   Updated: 2021/10/13 14:48:50 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	conv(const char *str, int i, int neg)
+int	conv_check(const char *str, int i, int neg, int *isint)
 {
-	long int		tmp;
 	unsigned int	res;
 
-	tmp = 0;
 	res = 0;
-	while (str[i] >= '0' && str[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9' && *isint == 1)
 	{
 		res = res * 10 + str[i] - 48;
-		if (res < tmp && neg == -1)
-			return (0);
-		else if (res < tmp)
-			return (-1);
-		tmp = res;
 		i++;
+		if (neg == 1 && res >= 214748364 && str[i] - 48 > 7)
+			*isint = 0;
+		else if (neg == -1 && res >= 214748364 && str[i] - 48 > 8)
+			*isint = 0;
+		if (res >= 2147483647 && str[i] != '\0')
+			*isint = 0;
 	}
 	return (res * neg);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi_check(const char *str, int *isint)
 {
-	int				i;
-	int				neg;
+	int		i;
+	int		neg;
 
 	i = 0;
-	while (str[i] == '\r' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\t' || str[i] == '\f' || str[i] == ' ')
+	*isint = 1;
+	while (ft_ischar("\r\n\v\t\f ", str[i]) == 1)
 		i++;
 	neg = 1;
 	if (str[i] == '-')
 		neg = -1;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	return (conv(str, i, neg));
+	return (conv_check(str, i, neg, isint));
 }

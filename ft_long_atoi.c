@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_long_atoi.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 14:15:49 by agirona           #+#    #+#             */
-/*   Updated: 2021/10/13 14:52:21 by agirona          ###   ########lyon.fr   */
+/*   Created: 2021/09/22 15:57:49 by agirona           #+#    #+#             */
+/*   Updated: 2021/09/22 16:11:18 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	conv(const char *str, int i, int neg)
+long int	long_conv(const char *str, int i, int neg)
 {
 	long int		tmp;
-	unsigned int	res;
+	long int		res;
 
 	tmp = 0;
 	res = 0;
@@ -32,7 +32,7 @@ int	conv(const char *str, int i, int neg)
 	return (res * neg);
 }
 
-int	ft_atoi(const char *str)
+long int	ft_long_atoi(const char *str)
 {
 	int				i;
 	int				neg;
@@ -46,5 +46,5 @@ int	ft_atoi(const char *str)
 		neg = -1;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	return (conv(str, i, neg));
+	return (long_conv(str, i, neg));
 }

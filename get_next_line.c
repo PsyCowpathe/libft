@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 12:43:53 by agirona           #+#    #+#             */
-/*   Updated: 2021/06/21 16:26:44 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/06/21 16:40:55 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,6 @@ int	freevar(char **var1, char **var2, int ret)
 		*var2 = NULL;
 	}
 	return (ret);
-}
-
-int	new_malloc(void **dst, int type, int len)
-{
-	*dst = malloc(type * len);
-	if (*dst == NULL)
-		return (0);
-	return (1);
 }
 
 int	do_shit(int *ret, char **line, int fd)
