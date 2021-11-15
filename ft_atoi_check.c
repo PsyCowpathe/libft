@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 16:33:25 by agirona           #+#    #+#             */
-/*   Updated: 2021/10/13 14:48:50 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/11/15 12:32:23 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,23 @@
 int	conv_check(const char *str, int i, int neg, int *isint)
 {
 	unsigned int	res;
+	int				final;
+	char			*tmp;
 
 	res = 0;
 	while (str[i] >= '0' && str[i] <= '9' && *isint == 1)
+		res = res * 10 + str[i++] - 48;
+	final = res * neg;
+	tmp = ft_itoa(final);
+	if (tmp == NULL)
 	{
-		res = res * 10 + str[i] - 48;
-		i++;
-		if (neg == 1 && res >= 214748364 && str[i] - 48 > 7)
-			*isint = 0;
-		else if (neg == -1 && res >= 214748364 && str[i] - 48 > 8)
-			*isint = 0;
-		if (res >= 2147483647 && str[i] != '\0')
-			*isint = 0;
+		*isint = 0;
+		return (0);
 	}
-	return (res * neg);
+	if (ft_strcmp((char *)str, tmp) != 0)
+		*isint = 0;
+	free(tmp);
+	return (res);
 }
 
 int	ft_atoi_check(const char *str, int *isint)
