@@ -6,7 +6,7 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:18:44 by agirona           #+#    #+#             */
-/*   Updated: 2021/09/23 16:33:44 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 16:08:59 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,5 @@ int					new_malloc(void **dst, int type, int len);
 int					new_ternaire(int condition, int res1, int res2);
 long int			ft_long_atoi(const char *str);
 int					ft_atoi_check(const char *str, int *isint);
+int					ft_iswhitespace(char c);
 #endif
