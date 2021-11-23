@@ -6,7 +6,7 @@
 #    By: agirona <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/26 16:22:31 by agirona           #+#    #+#              #
-#    Updated: 2021/09/23 16:34:01 by agirona          ###   ########lyon.fr    #
+#    Updated: 2021/11/23 16:23:03 by agirona          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS	= ft_atoi.c ft_memcmp.c ft_putendl_fd.c ft_strchr.c ft_strmapi.c ft_substr.
 		  ft_lstadd_back.c ft_lstdelone.c  ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 		  ft_sort_int_tab.c ft_swap.c ft_putstr_non_printable.c ft_putnbr_base.c \
 		  ft_strncpy.c get_next_line.c get_next_line_utils.c ft_strcmp.c new_malloc.c \
-		  new_ternaire.c ft_long_atoi.c ft_atoi_check.c
+		  new_ternaire.c ft_long_atoi.c ft_atoi_check.c ft_iswhitespace.c
 
 OBJS	= $(SRCS:.c=.o)
 
