@@ -6,13 +6,13 @@
 /*   By: agirona <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:06:40 by agirona           #+#    #+#             */
-/*   Updated: 2021/11/23 16:09:10 by agirona          ###   ########lyon.fr   */
+/*   Updated: 2021/12/16 16:15:45 by agirona          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_iswhitespace(char c)
+int	ft_iswhitespace(char c)
 {
 	if (ft_ischar("\r\n\v\t\f ", c) == 1)
 		return (1);
